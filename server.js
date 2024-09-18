@@ -73,7 +73,7 @@ app.get('/detail/:url', async (request, response) => {
     }
     response.render('detail.ejs', { result : result })
   } catch(e) {
-    response.status(404).send(e + ' 니 머하노')
+    response.status(404).send(e + '니 머하노')
   }
   
   

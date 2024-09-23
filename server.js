@@ -1,6 +1,8 @@
 const express = require('express')
-const app = express()
+const app = express();
+const methodOverride = require('method-override');
 
+app.use(methodOverride('_method'))
 app.use(express.static(__dirname + '/public'))
 app.set('view engine', 'ejs')
 app.use(express.json())
@@ -72,11 +74,40 @@ app.get('/detail/:url', async (request, response) => {
       response.status(404).send(e + ' 니 머하노')
     }
     response.render('detail.ejs', { result : result })
+    
   } catch(e) {
     response.status(404).send(e + '니 머하노')
   }
-  
-  
 })
 
+app.get('/edit/:id', async (request, response) => {
+  try {
+    let result = await db.collection('post').findOne({ _id : new ObjectId(request.params.id) })
+    if (result == null) {
+      response.status(404).send(e + ' 니 머하노')
+    }
+    response.render('edit.ejs', { result : result })
+    
+  } catch(e) {
+    response.status(404).send(e + '니 머하노')
+  }
+})
 
+app.put('/edit', async (request, response) => {
+
+  await db.collection('post').updateOne( { _id : 1 }, 
+    { $inc : { like : 2 } })
+  // try {
+  //   if ( request.body.title == '' || request.body.content == '') {
+  //     response.send('제목이랑 글 적으셈')
+      
+  //   } else {
+  //     let result = await db.collection('post').updateOne( { _id : new ObjectId(request.body.id) }, 
+  //   { $set : { title : request.body.title, content : request.body.content} })
+  //   console.log(result)
+  //   response.redirect('/list')
+  //   }
+  // } catch {
+  //   response.send('뭐함?')
+  // }
+})

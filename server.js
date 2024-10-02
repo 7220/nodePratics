@@ -108,6 +108,6 @@ app.put('/edit', async (request, response) => {
   //   response.redirect('/list')
   //   }
   // } catch {
-  //   response.send('뭐함?')
+  //   response.send('뭐함 ?')
   // }
 })
